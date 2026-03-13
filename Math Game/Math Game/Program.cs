@@ -1,9 +1,7 @@
-﻿using System.Diagnostics;
-using System.Linq.Expressions;
-using System.Net;
-using System.Numerics;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Cryptography;
+﻿
+
+
+using System.Diagnostics;
 
 namespace Math_Game
 {
@@ -40,7 +38,7 @@ namespace Math_Game
 
                 if (userOption == 1)
                 {
-                    gameParemeters = getGameParameters();
+                    gameParemeters = GetGameParameters();
                     gameParameterChosen = true;
                     continue;
                 }
@@ -54,12 +52,12 @@ namespace Math_Game
                     while (true)
                     {
                         Console.WriteLine("do you want a random game? (yes/no)");
-                        string userInputForRandomGame = Console.ReadLine();
-                        userInputForRandomGame = userInputForRandomGame.ToLower();
+
+                        string userInputForRandomGame = (Console.ReadLine() ?? "").ToLower();
 
                         if (userInputForRandomGame == "yes")
                         {
-                            history.AddRange(playGame(gameParemeters.Item1, gameParemeters.Item2, true, 0));
+                            history.AddRange(PlayGame(gameParemeters.Item1, gameParemeters.Item2, true, 0));
                             break;
                         }
                         else if (userInputForRandomGame == "no")
@@ -77,7 +75,7 @@ namespace Math_Game
                             }
                             else
                             {
-                                history.AddRange(playGame(gameParemeters.Item1, gameParemeters.Item2, false, userChosenOperator - 1));
+                                history.AddRange(PlayGame(gameParemeters.Item1, gameParemeters.Item2, false, userChosenOperator - 1));
                             }
                             break;
                         }
@@ -116,18 +114,17 @@ namespace Math_Game
             }
         }
 
-        static (string difficulty, int numberOfQuestions) getGameParameters()
+        static (string difficulty, int numberOfQuestions) GetGameParameters()
         {
 
-            string difficulty = "";
+            string? difficulty = "";
             int numberOfQuestions = 0;
 
             while (true)
             {
                 Console.WriteLine("please enter a valid difficulty: easy, normal or hard");
-                difficulty = Console.ReadLine();
 
-                difficulty = difficulty.ToLower();
+                difficulty = (Console.ReadLine() ?? "").ToLower();
                 if (difficulty != "easy" && difficulty != "normal" && difficulty != "hard")
                 {
                     continue;
@@ -158,7 +155,7 @@ namespace Math_Game
 
 
 
-        static List<string> playGame(string difficulty, int numberOfQuestions, bool randomGameBool, int userChosenOperator)
+        static List<string> PlayGame(string difficulty, int numberOfQuestions, bool randomGameBool, int userChosenOperator)
         {
             List<string> history = new List<string>();
             Random rand = new Random();
